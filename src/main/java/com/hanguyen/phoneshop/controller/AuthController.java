@@ -2,10 +2,12 @@ package com.hanguyen.phoneshop.controller;
 
 import com.hanguyen.phoneshop.config.JwtProvider;
 import com.hanguyen.phoneshop.exception.UserException;
+import com.hanguyen.phoneshop.model.Cart;
 import com.hanguyen.phoneshop.model.User;
 import com.hanguyen.phoneshop.repository.UserRepository;
 import com.hanguyen.phoneshop.request.LoginRequest;
 import com.hanguyen.phoneshop.response.AuthResponse;
+import com.hanguyen.phoneshop.service.CartService;
 import com.hanguyen.phoneshop.service.CustomeUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,16 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     private CustomeUserServiceImpl customeUserService;
 
-    public AuthController(UserRepository userRepository,JwtProvider jwtProvider, PasswordEncoder passwordEncoder, CustomeUserServiceImpl customeUserService) {
+    private CartService cartService;
+
+    public AuthController(UserRepository userRepository,JwtProvider jwtProvider,
+                          PasswordEncoder passwordEncoder, CustomeUserServiceImpl customeUserService,
+                          CartService cartService) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
         this.passwordEncoder = passwordEncoder;
         this.customeUserService = customeUserService;
+        this.cartService = cartService;
     }
 
     @PostMapping("/signup")
@@ -58,8 +65,8 @@ public class AuthController {
         createdUser.setFirstName(firstName);
         createdUser.setLastName(lastName);
 
-
         User savedUser = userRepository.save(createdUser);
+        Cart cart = cartService.createCart(savedUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);

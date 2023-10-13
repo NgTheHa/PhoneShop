@@ -13,4 +13,5 @@ public interface CartService {
 
     public Cart findUserCard(Long userId);
 
+    void clearCart(Long userId);
 }

@@ -44,7 +44,7 @@ public class Order {
 
     private Integer totalItem;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
 
 
@@ -52,10 +52,7 @@ public class Order {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-    public Order(Long id, String orderId, User user, List<OrderItem> orderItems, LocalDateTime orderDate, LocalDateTime deliveryDate, Address shippingAddress, PaymentDetails paymentDetails, double totalPrice, Integer totalDiscountedPrice, Integer discounte, String orderStatus, Integer totalItem, LocalDateTime createAt) {
+    public Order(Long id, String orderId, User user, List<OrderItem> orderItems, LocalDateTime orderDate, LocalDateTime deliveryDate, Address shippingAddress, PaymentDetails paymentDetails, double totalPrice, Integer totalDiscountedPrice, Integer discounte, String orderStatus, Integer totalItem, LocalDateTime createdAt) {
         this.id = id;
         this.orderId = orderId;
         this.user = user;
@@ -69,7 +66,11 @@ public class Order {
         this.discounte = discounte;
         this.orderStatus = orderStatus;
         this.totalItem = totalItem;
-        this.createAt = createAt;
+        this.createdAt = createdAt;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
@@ -172,11 +173,11 @@ public class Order {
         this.totalItem = totalItem;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

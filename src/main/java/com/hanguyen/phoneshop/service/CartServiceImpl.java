@@ -7,7 +7,9 @@ import com.hanguyen.phoneshop.model.Product;
 import com.hanguyen.phoneshop.model.User;
 import com.hanguyen.phoneshop.repository.CartRepository;
 import com.hanguyen.phoneshop.request.AddItemRequest;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CartServiceImpl implements CartService{
 
     private CartRepository cartRepository;
@@ -74,5 +76,12 @@ public class CartServiceImpl implements CartService{
         cart.setDiscounte(totalPrice-totalDiscountPrice);
 
         return cartRepository.save(cart);
+    }
+
+    @Override
+    public void clearCart(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId);
+        cart.getCartItems().clear();
+        cartRepository.save(cart);
     }
 }
