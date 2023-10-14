@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Dimensions, ScrollView,TouchableOpacity } from 'react-native';
-import ScreenNames from '../utils/ScreenNames';
+import ScreenNames from '../Utils/ScreenNames';
 
 const windownWidth = Dimensions.get('window').width;
 const windownHeight = Dimensions.get('window').height;
@@ -41,7 +41,7 @@ const LoginScreen = ({navigation, route}) => {
             </View>
 
             <View>
-                <Pressable style={styles.loginButton}>
+                <Pressable style={styles.loginButton} onPress={ () => {navigation.navigate(ScreenNames.Main)}}>
                     <Text style={styles.labelButton}>Login</Text>
                 </Pressable>
             </View>
@@ -49,7 +49,7 @@ const LoginScreen = ({navigation, route}) => {
                 <Text style = {{color: '#B7B7B7'}}>Dont Have An Account?
                 <TouchableOpacity onPress={ () => {navigation.navigate(ScreenNames.RegisterAcc)}}>
                     <Text style = {{color: 'blue', fontWeight: 600}}>Register Now</Text>
-                    </TouchableOpacity>
+                </TouchableOpacity>
                     
                 </Text>
             </View>

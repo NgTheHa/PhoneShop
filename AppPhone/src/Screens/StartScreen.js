@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
-import ScreenNames from '../utils/ScreenNames';
+import ScreenNames from '../Utils/ScreenNames';
 import { useEffect } from 'react';
 
 const StartScreen = ({navigation, route}) => {

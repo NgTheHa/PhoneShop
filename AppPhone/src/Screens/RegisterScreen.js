@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Dimensions, ScrollView,TouchableOpacity } from 'react-native';
-import ScreenNames from '../utils/ScreenNames';
+import ScreenNames from '../Utils/ScreenNames';
 
 const windownWidth = Dimensions.get('window').width;
 const windownHeight = Dimensions.get('window').height;

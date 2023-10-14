@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, Pressable, Dimensions,TouchableOpacity } from 'react-native';
-
+import ScreenNames from '../Utils/ScreenNames';
 
 const windownWidth = Dimensions.get('window').width;
 const windownHeight = Dimensions.get('window').height;
@@ -12,7 +12,7 @@ const RegisterScreenDone = ({navigation, route}) => {
             <Text style = {styles.title}>Sign Up Success</Text>
             <Text style={styles.detail}>Đăng ký thành công, bạn có thể đăng nhập ngay</Text>
             <View style={{alignSelf: 'center'}}>
-                <Pressable style={styles.loginButton}>
+                <Pressable style={styles.loginButton} onPress={ () => {navigation.navigate(ScreenNames.Login)}}>
                     <Text style={styles.labelButton}>Login now</Text>
                 </Pressable>
             </View>

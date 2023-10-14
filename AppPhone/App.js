@@ -8,8 +8,9 @@ import CheckEmailScreen from './src/Screens/CheckEmailScreen';
 import RegisterScreen from './src/Screens/RegisterScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ScreenNames from './src/utils/ScreenNames';
+import ScreenNames from './src/Utils/ScreenNames';
 import RegisterScreenDone from './src/Screens/RegisterScreenDone';
+import MyTabs from './src/Screens/MainScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,7 +53,11 @@ export default function App() {
           component={RegisterScreenDone}
           options={{headerShown: false}}
         />
-         
+         <Stack.Screen
+          name={ScreenNames.Main}
+          component={MyTabs}
+          options={{headerShown: false}}
+        />
          
         
       </Stack.Navigator>

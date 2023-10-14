@@ -4,7 +4,8 @@ const ScreenNames = {
     CheckEmail: 'check',
     ChangePassword: 'change',
     RegisterAcc: 'register',
-    RegisterSD: 'registerD'
+    RegisterSD: 'registerD',
+    Main:'main'
 }
 
 export default ScreenNames;
