@@ -22,4 +22,5 @@ public interface ProductService {
                                        Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize);
 
 
+    List<Product> findAllProducts();
 }

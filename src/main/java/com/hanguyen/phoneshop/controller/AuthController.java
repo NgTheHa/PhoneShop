@@ -12,6 +12,7 @@ import com.hanguyen.phoneshop.service.CustomeUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,17 +31,18 @@ public class AuthController {
     private JwtProvider jwtProvider;
     private PasswordEncoder passwordEncoder;
     private CustomeUserServiceImpl customeUserService;
-
+    private AuthenticationManager authenticationManager;
     private CartService cartService;
 
     public AuthController(UserRepository userRepository,JwtProvider jwtProvider,
                           PasswordEncoder passwordEncoder, CustomeUserServiceImpl customeUserService,
-                          CartService cartService) {
+                          CartService cartService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
         this.passwordEncoder = passwordEncoder;
         this.customeUserService = customeUserService;
         this.cartService = cartService;
+        this.authenticationManager =authenticationManager;
     }
 
     @PostMapping("/signup")
@@ -83,34 +85,36 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse>loginUserHandle(@RequestBody LoginRequest loginRequest){
-
+    public ResponseEntity<AuthResponse> loginUserHandle(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        Authentication authentication = authenticate(username, password);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        User user = userRepository.findByEmail(username);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtProvider.GenerateToken(authentication);
+            String token = jwtProvider.GenerateToken(authentication);
 
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setJwt(token);
+            authResponse.setMessage("Signin Success...");
 
-        AuthResponse authResponse = new AuthResponse();
-        authResponse.setJwt(token);
-        authResponse.setMessage("Signin Succsess...");
-
-        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
-
+            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+        } else {
+            throw new BadCredentialsException("Invalid password");
+        }
     }
 
     private Authentication authenticate(String username, String password) {
-
         UserDetails userDetails = customeUserService.loadUserByUsername(username);
 
         if(userDetails==null){
-            throw new BadCredentialsException("In valid username...");
+            throw new BadCredentialsException("Invalid username...");
         }
-        if (passwordEncoder.matches(password, userDetails.getPassword())){
-            throw new BadCredentialsException("In valid password...");
+        if (!passwordEncoder.matches(password, userDetails.getPassword())){
+            throw new BadCredentialsException("Invalid password...");
         }
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
