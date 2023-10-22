@@ -1,10 +1,16 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Dimensions, ScrollView,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Dimensions, TouchableOpacity } from 'react-native';
+import {useState} from 'react'
 import ScreenNames from '../Utils/ScreenNames';
+
 
 const windownWidth = Dimensions.get('window').width;
 const windownHeight = Dimensions.get('window').height;
 
-const LoginScreen = ({navigation, route}) => {
+const LoginScreen = ({ navigation, route }) => {
+    const[email,setEmail] = useState();
+    const[password,setPassword] = useState();
+    
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.brand}>
@@ -24,33 +30,43 @@ const LoginScreen = ({navigation, route}) => {
                     </Pressable>
                 </View>
                 <View>
-                    <Text style={{textAlign: 'center'}}>Or</Text>
+                    <Text style={{ textAlign: 'center' }}>Or</Text>
                 </View>
             </View>
 
             <View sytle={styles.loginForm}>
                 <View>
                     <Text style={styles.labelInput}>EMAIL ID</Text>
-                    <TextInput style = {styles.textInput} placeholder='user@gmail.com'></TextInput>
+                    <TextInput 
+                    style={styles.textInput} 
+                    placeholder='user@gmail.com'
+                    value = {email}
+                    onchangeText={(text) => setEmail(text)} >
+                    </TextInput>
                 </View>
-                <View  style = {styles.input}>
+                <View style={styles.input}>
                     <Text style={styles.labelInput}>PASSWORD</Text>
-                    <TextInput style = {styles.textInput} placeholder='.......' secureTextEntry={true}></TextInput>
+                    <TextInput 
+                    style={styles.textInput} placeholder='.......' 
+                    secureTextEntry={true}
+                    value = {password}
+                    onchangeText={(text) => setPassword(text)}>
+                    </TextInput>
                 </View>
-                <Text style = {styles.changePassword} onPress={ () => {navigation.navigate(ScreenNames.ChangePassword)}}>forgot password?</Text>
+                <Text style={styles.changePassword} onPress={() => { navigation.navigate(ScreenNames.ChangePassword) }}>forgot password?</Text>
             </View>
 
             <View>
-                <Pressable style={styles.loginButton} onPress={ () => {navigation.navigate(ScreenNames.Main)}}>
+                <Pressable style={styles.loginButton} onPress={() => { navigation.navigate(ScreenNames.Main) }}>
                     <Text style={styles.labelButton}>Login</Text>
                 </Pressable>
             </View>
             <View>
-                <Text style = {{color: '#B7B7B7'}}>Dont Have An Account?
-                <TouchableOpacity onPress={ () => {navigation.navigate(ScreenNames.RegisterAcc)}}>
-                    <Text style = {{color: 'blue', fontWeight: 600}}>Register Now</Text>
-                </TouchableOpacity>
-                    
+                <Text style={{ color: '#B7B7B7' }}>Dont Have An Account?
+                    <TouchableOpacity onPress={() => { navigation.navigate(ScreenNames.RegisterAcc) }}>
+                        <Text style={{ color: 'blue', fontWeight: 600 }}>Register Now</Text>
+                    </TouchableOpacity>
+
                 </Text>
             </View>
         </SafeAreaView>
@@ -98,25 +114,25 @@ const styles = StyleSheet.create({
         height: 25,
         marginRight: 10
     },
-    loginForm : {
-        width: windownWidth*0.8,
+    loginForm: {
+        width: windownWidth * 0.8,
     },
-    labelInput : {
+    labelInput: {
         color: "#B7B7B7"
     },
     textInput: {
-        width: windownWidth*0.8,
+        width: windownWidth * 0.8,
         marginBottom: 20,
-        borderBottomWidth: 1, 
+        borderBottomWidth: 1,
         borderBottomColor: '#B7B7B7',
     },
-    changePassword : {
+    changePassword: {
         textAlign: 'right',
         color: 'blue',
         fontWeight: '600',
     },
     loginButton: {
-        width: windownWidth*0.8,
+        width: windownWidth * 0.8,
         height: 50,
         alignItems: 'center',
         backgroundColor: 'blue',

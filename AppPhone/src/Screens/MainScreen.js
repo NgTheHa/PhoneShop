@@ -1,18 +1,58 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaView,Text,Image } from 'react-native';
+import {FlatList, SafeAreaView,Text,Image, View, StyleSheet, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import CartScreen from './CartScreen';
 import PayScreen from './PayScreen';
 import ProfileScreen from './ProfileScreen';
+import Slider from '../../Home/Slider';
+import ProductCardView from '../../Home/ProductCardView';
+
 
 const Tab = createBottomTabNavigator()
 
 function MainScreen () {
+  const products = [1,2,3,4]
     return (
-        <SafeAreaView style = {{justifyContent:'center',alignItems:'center', flex:1}}>
-            <Text> da chay </Text>
+        <SafeAreaView style = {{ flex:1,alignItems:'center',justifyContent:'center'}}>
+            <View style = {styles.searchBar}>
+             <TextInput style = { styles.searchInput } placeholder='Nhap san pham ban muon tim...' ></TextInput>
+             <Image source={require('../../image/search.png')} style = {{height:"35%", width:'10%'}} />
+            </View>
+            <ScrollView>
+              <Slider/>
+            </ScrollView>
+            <View style = {styles.listItem}>
+              <FlatList 
+                data = {products}
+                renderItem = {() => <ProductCardView/>}
+                horizontal
+                contentContainerStyle={{columnGap:100}}
+              />
+            </View>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+  searchBar: {
+    width:'100%',
+    height:'20%',
+    alignItems : 'center',
+    justifyContent:'space-evenly',
+    flexDirection:'row'
+  },
+  searchInput: {
+    borderWidth:1,
+    width:'70%',
+    height:'30%',
+    borderRadius:5,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  listItem: {
+    width:'90%',
+    height:'50%'
+  }
+})
 
 function MyTabs() {
   return (

@@ -1,5 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import StartScreen from './src/Screens/StartScreen';
 import LoginScreen from './src/Screens/LoginScreen';
 import ChangePasswordScreen from './src/Screens/ChangePasswordScreen';
@@ -11,6 +9,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ScreenNames from './src/Utils/ScreenNames';
 import RegisterScreenDone from './src/Screens/RegisterScreenDone';
 import MyTabs from './src/Screens/MainScreen';
+import ProductScreen from './src/Screens/ProductScreen';
+import ProductCardView from './Home/ProductCardView';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,8 +58,19 @@ export default function App() {
           component={MyTabs}
           options={{headerShown: false}}
         />
-         
+        <Stack.Screen
+          name={ScreenNames.CardView}
+          component={ProductCardView}
+          options={{headerShown: false}}
+        />
         
+        <Stack.Screen
+          name={ScreenNames.Detail}
+          component={ProductScreen}
+          options={{headerShown: false}}
+        />
+        
+         
       </Stack.Navigator>
     </NavigationContainer>
   );
