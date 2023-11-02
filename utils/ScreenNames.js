@@ -5,6 +5,9 @@ const ScreenNames = {
     ChangePassword: 'change',
     RegisterAcc: 'register',
     RegisterSD: 'registerD'
+    Main:'main',
+    Detail:'detail',
+    CardView:'cardview',
 }
 
 export default ScreenNames;
